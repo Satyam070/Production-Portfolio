@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Intro, About, Project, Contact, Experience, Course } = require("../models/portfolioModel");
+const { Intro, About, Project, Contact, Education, Course } = require("../models/portfolioModel");
 const User = require("../models/userModel");
 //api to get whole data
 router.get("/get-portfolio-data", async (req, res) => {
@@ -8,7 +8,7 @@ router.get("/get-portfolio-data", async (req, res) => {
         const abouts = await About.find();
         const projects = await Project.find();
         const contacts = await Contact.find();
-        const experiences = await Experience.find();
+        const educations = await Education.find();
         const courses = await Course.find();
 
         res.status(200).send({
@@ -16,7 +16,7 @@ router.get("/get-portfolio-data", async (req, res) => {
             about: abouts[0],
             projects: projects,
             contact: contacts[0],
-            experiences: experiences,
+            educations: educations,
             courses: courses,
         });
     }
@@ -61,46 +61,46 @@ router.post("/update-about", async (req, res) => {
     }
 });
 
-//admin-add-experience-api
-router.post("/add-experience", async (req, res) => {
+//admin-add-education-api
+router.post("/add-education", async (req, res) => {
     try {
-        const experience = await Experience(req.body);
-        await experience.save();
+        const education = await Education(req.body);
+        await education.save();
         res.status(200).send({
-            data: experience,
+            data: education,
             success: true,
-            message: "Experience added Successfully"
+            message: "Education added Successfully"
         });
     } catch (error) {
         res.status(500).send(error);
     }
 });
 
-// update-experience
-router.post("/update-experience", async (req, res) => {
+// update-education
+router.post("/update-education", async (req, res) => {
     try {
-        const experience = await Experience.findOneAndUpdate(
+        const education = await Education.findOneAndUpdate(
             { _id: req.body._id },
             req.body,
             { new: true }
         );
         res.status(200).send({
-            data: experience,
+            data: education,
             success: true,
-            message: "Experience updated Successfully",
+            message: "Education updated Successfully",
         });
     } catch (error) {
         res.status(500).send(error);
     }
 });
 //delete
-router.post("/delete-experience", async (req, res) => {
+router.post("/delete-education", async (req, res) => {
     try {
-        const experience = await Experience.findOneAndDelete({ _id: req.body._id });
+        const education = await Education.findOneAndDelete({ _id: req.body._id });
         res.status(200).send({
-            data: experience,
+            data: education,
             success: true,
-            message: "Experience deleted Successfully",
+            message: "Education deleted Successfully",
         });
     } catch (error) {
         res.status(500).send(error);
